@@ -4,8 +4,6 @@ import TicTacToe.pojo.TicTacToeBoard;
 import lombok.val;
 import org.javatuples.Pair;
 
-import java.util.List;
-
 public class CommonUtils {
 
     public static boolean isGameFinished(TicTacToeBoard board, Pair<Integer, Integer> playedPosition) {
