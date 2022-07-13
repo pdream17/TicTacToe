@@ -59,4 +59,91 @@ public class CommonUtils {
         }
         return isGameFinished;
     }
+
+    private Integer ticTacToeResult(TicTacToeBoard ticTacToeBoard) {
+        int size = ticTacToeBoard.getSize();
+        String[][] board = ticTacToeBoard.getTicTacToe();
+
+        //check Rows
+        for (int i=0; i<size; i++) {
+            boolean foundStreak = true;
+            for (int j=0; j<size; j++) {
+                if (!board[i][j].equals(board[i][0])) {
+                    foundStreak = false;
+                    break;
+                }
+            }
+            if (foundStreak) {
+                if (board[i][0].equals("X")) {
+                    return 1;
+                } else if (board[i][0].equals("O")) {
+                    return -1;
+                }
+            }
+        }
+
+        //check Columns
+        for (int j=0; j<size; j++) {
+            boolean foundStreak = true;
+            for (int i=0; i<size; i++) {
+                if (!board[i][j].equals(board[0][j])) {
+                    foundStreak = false;
+                    break;
+                }
+            }
+            if (foundStreak) {
+                if (board[0][j].equals("X")) {
+                    return 1;
+                } else if (board[0][j].equals("O")) {
+                    return -1;
+                }
+            }
+        }
+
+        //check Diagonal
+        boolean backwardSlash = true;
+        boolean forwardSlash = true;
+        for (int i=0; i<size; i++) {
+            for (int j=0; j<size; j++) {
+                if (i==j && !board[i][j].equals(board[0][0]) && backwardSlash) {
+                    backwardSlash = false;
+                }
+                if (i+j+1==size && !board[i][j].equals(board[0][size-1]) && forwardSlash) {
+                    forwardSlash = false;
+                }
+            }
+        }
+        if (forwardSlash) {
+            if (board[0][size-1].equals("X")) {
+                return 1;
+            } else if (board[0][size-1].equals("O")) {
+                return -1;
+            }
+        } else if (backwardSlash) {
+            if (board[0][0].equals("X")) {
+                return 1;
+            } else if (board[0][0].equals("O")) {
+                return -1;
+            }
+        }
+
+        if (checkAllSlotsFilled(ticTacToeBoard)) {
+            return 0;
+        } else {
+            return -3;
+        }
+    }
+
+    private boolean checkAllSlotsFilled(TicTacToeBoard ticTacToeBoard) {
+        int size = ticTacToeBoard.getSize();
+        String[][] board = ticTacToeBoard.getTicTacToe();
+        for (int i = 0; i<size; i++) {
+            for (int j=0; j<size; j++) {
+                if (board[i][j] == "_") {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
 }
